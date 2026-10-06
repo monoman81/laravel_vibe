@@ -5,8 +5,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home.index');
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('admin.index');
@@ -23,8 +23,10 @@ require __DIR__.'/auth.php';
 Route::get('/admin/logout', [AdminController::class, 'destroy'])->name('admin.logout');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::post('/profile/store', [AdminController::class, 'store'])->name('profile.store');
+    Route::post('/profile/changePassword', [AdminController::class, 'changePassword'])->name('profile.changePassword');
 });
 
 Route::get('/verify', [AdminController::class, 'show'])->name('custom.verification.form');

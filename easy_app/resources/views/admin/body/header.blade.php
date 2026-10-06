@@ -67,7 +67,7 @@
                                         <p class="notify-details">Olivia McGuire</p>
                                         <small class="text-muted">1 min ago</small>
                                     </div>
-                        
+
                                     <div class="d-flex mt-2 align-items-center">
                                         <div class="notify-sub-icon">
                                             <i class="mdi mdi-download-box text-dark"></i>
@@ -81,7 +81,7 @@
 
                                 </div>
                             </a>
-                            
+
                         </div>
 
                         <!-- All-->
@@ -93,11 +93,18 @@
                     </div>
                 </li>
 
+                @php
+                    $id = Auth::user()->id;
+                    $profileData = App\Models\User::find($id);
+                @endphp
+
                 <li class="dropdown notification-list topbar-dropdown">
                     <a class="nav-link dropdown-toggle nav-user me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="{{ asset('backend/assets/images/users/user-11.jpg') }}" alt="user-image" class="rounded-circle">
+                        <img src="{{ (!empty($profileData->photo)) ? url("uploads/user_images/$profileData->photo") : url('uploads/no_image.jpg') }}"
+                             alt="user-image" class="rounded-circle"
+                        >
                         <span class="pro-user-name ms-1">
-                            Christian <i class="mdi mdi-chevron-down"></i> 
+                            {{ $profileData->name }} <i class="mdi mdi-chevron-down"></i>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -133,5 +140,5 @@
         </div>
 
     </div>
-    
+
 </div>
